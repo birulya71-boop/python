@@ -1,0 +1,46 @@
+ ======================================================
+# 1. Модулі
+# 2. Налаштування + створення вікна
+# 3. Логіка гри (класи\функції\умови\створення об'єктів)
+# 4. Сердце гри (Нескінченний цикл від якого працює гра)
+# ======================================================
+
+# 1. Модулі
+import pygame
+pygame.init()
+
+# 2. Налаштування + створення вікна
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+pygame.display.set_caption("My First Project")
+background = pygame.image.load("background.jpg")
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+# 3. Логіка гри + ігрові об'єкти (класи\функції\умови\створення об'єктів)
+class GameObject():
+    def __init__(self, filename, x, y, width, height):
+        self.image_right = pygame.image.load(filename)
+        self.image_right = pygame.transform.scale(self.image_right, (width, height))
+        self.image_left = pygame.transform.flip(self.image_right, True, False)
+        self.image = self.image_right
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def draw(self):
+        screen.blit(self.image, self.rect)
+
+
+# 4. Сердце гри (Нескінченний цикл від якого працює гра)
+start = True 
+while start:
+    screen.blit(background, (0, 0))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            start = False 
+
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
